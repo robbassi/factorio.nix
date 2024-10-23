@@ -41,13 +41,13 @@ rec {
 
     DATA_DIR="$HOME/.factorio"
 
-    # first run, create user dir for config + write data
+    # On the first run, create DATA_DIR, and install the default config.
     if [ ! -d "$DATA_DIR" ]; then
       mkdir -p "$DATA_DIR/config"
       cat ${./config.ini} > "$DATA_DIR/config/config.ini"
       sed -i "s|\$DATA_DIR|$DATA_DIR|g" "$DATA_DIR/config/config.ini"
     fi
 
-    ${factorio-patched}/bin/x64/factorio --config "$DATA_DIR/config/config.ini" && exit
+    ${factorio-patched}/bin/x64/factorio --config "$DATA_DIR/config/config.ini"
   '';
 }
