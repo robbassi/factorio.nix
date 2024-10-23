@@ -1,9 +1,11 @@
-{ pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/master.tar.gz") {} }:
+{ src,
+  pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/master.tar.gz") {}
+}:
 
 with {
-  factorio-patched = pkgs.stdenv.mkDerivation rec {
+  factorio-patched = pkgs.stdenv.mkDerivation {
     name = "factorio-patched2";
-    src = ./factorio-space-age_linux_2.0.8.tar.xz;
+    inherit src;
 
     dontConfigure = true;
     dontBuild = true;
@@ -42,26 +44,8 @@ rec {
     # first run, create user dir for config + write data
     if [ ! -d "$DATA_DIR" ]; then
       mkdir -p "$DATA_DIR/config"
-      cat << EOF > "$DATA_DIR/config/config.ini"
-; version=11
-[path]
-read-data=__PATH__executable__/../../data
-write-data=$DATA_DIR
-
-[general]
-locale=auto
-
-[other]
-[interface]
-[input]
-[controls]
-[controller]
-[sound]
-[map-view]
-[debug]
-[multiplayer-lobby]
-[graphics]
-EOF
+      cat ${./config.ini} > "$DATA_DIR/config/config.ini"
+      sed -i "s|\$DATA_DIR|$DATA_DIR|g" "$DATA_DIR/config/config.ini"
     fi
 
     ${factorio-patched}/bin/x64/factorio --config "$DATA_DIR/config/config.ini" && exit
