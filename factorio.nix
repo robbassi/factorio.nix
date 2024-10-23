@@ -4,7 +4,7 @@
 
 with {
   factorio-patched = pkgs.stdenv.mkDerivation {
-    name = "factorio-patched2";
+    name = "factorio-patched";
     inherit src;
 
     dontConfigure = true;
