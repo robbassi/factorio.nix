@@ -48,6 +48,6 @@ rec {
       sed -i "s|\$DATA_DIR|$DATA_DIR|g" "$DATA_DIR/config/config.ini"
     fi
 
-    ${factorio-patched}/bin/x64/factorio --config "$DATA_DIR/config/config.ini"
+    ${factorio-patched}/bin/x64/factorio --config "$DATA_DIR/config/config.ini" "$@"
   '';
 }
