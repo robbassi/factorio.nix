@@ -53,18 +53,18 @@ rec {
 
   factorio-server = pkgs.writeShellScriptBin "factorio-server" ''
     usage() {
-      echo "usage:"
+      echo "Usage:"
       echo ""
       echo "  $0 <name> create    : create the server folders and default config"
       echo "  $0 <name> map-gen @ : generate a map for the server, using the config"
       echo "  $0 <name> start @   : start the server"
       echo ""
-      echo "extra args (@) will be forwarded to the factorio executable."
+      echo "Extra args (@) will be forwarded to the factorio executable."
       exit 1
     }
 
     if [ "$#" -lt 2 ]; then
-      echo "error: invalid number of arguments"
+      echo "Error: invalid number of arguments"
       usage
     fi
 
@@ -78,23 +78,23 @@ rec {
 
     case $command in
       create)
-        echo "creating '$SERVER_DIR'"
+        echo "Creating '$SERVER_DIR'"
 
-        # create server directory structure
+        # Create server directory structure.
         mkdir -p $SERVER_DIR/config
         mkdir -p $SERVER_DIR/saves
         mkdir -p $SERVER_DIR/mods
 
-        # copy default configs
+        # Copy default configs.
         cat ${factorio-patched}/data/map-gen-settings.example.json > $SERVER_DIR/config/map-gen-settings.json
         cat ${factorio-patched}/data/map-settings.example.json > $SERVER_DIR/config/map-settings.json
         cat ${factorio-patched}/data/server-settings.example.json > $SERVER_DIR/config/server-settings.json
         ;;
 
       map-gen)
-        echo "generating map in '$SERVER_DIR'"
+        echo "Generating map in '$SERVER_DIR'"
 
-        # generate a save, this is also when the map is generated
+        # Generate a save, this is also when the map is generated.
         ${factorio}/bin/factorio \
           --create $SERVER_DIR/saves/main.zip \
           --map-gen-settings $SERVER_DIR/config/map-gen-settings.json \
@@ -103,9 +103,9 @@ rec {
         ;;
 
       start)
-        echo "starting '$SERVER_DIR'"
+        echo "Starting '$SERVER_DIR'"
 
-        # start the server
+        # Start the server.
         ${factorio}/bin/factorio \
           --start-server $SERVER_DIR/saves/main.zip \
           --server-settings $SERVER_DIR/config/server-settings.json \
@@ -113,7 +113,7 @@ rec {
         ;;
 
       *)
-        echo "error: unknown command '$command'"
+        echo "Error: unknown command '$command'"
         usage
         ;;
     esac
