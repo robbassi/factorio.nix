@@ -7,8 +7,8 @@ https://www.factorio.com/download.
 $ nix-env -i -f factorio.nix -A factorio --arg src ./factorio-space-age_linux_2.0.10.tar.xz
 $ factorio
 ```
-On the first run, the wrapper script creates `$HOME/.factorio` to store the
-mutable game data and config.
+On the first run, the wrapper script creates `$HOME/.factorio` to store the config and mutable game data.
+
 ### Server
 
 Install the server with:
@@ -23,6 +23,7 @@ $ nix-env -i -f factorio.nix -A factorio-server --arg src ./factorio-headless_li
 Create the server folder structure, and default configuration.
 ```bash
 $ factorio-server my-server-1 create
+
 Version: 2.0.10 (build 79578, linux64, headless)
 Version: 64
 Map input version: 1.0.0-0
@@ -32,8 +33,9 @@ Creating '/home/user/.factorio/servers/my-server-1'
 
 You can modify the configs, and/or add mods in this directory:
 ```bash
-$ tree ~/.factorio/servers/my-server-1/
-/home/user/.factorio/servers/my-server-1/
+$ tree ~/.factorio/servers/my-server-1
+
+my-server-1
 |-- config
 |   |-- map-gen-settings.json
 |   |-- map-settings.json
@@ -51,8 +53,3 @@ Launch the server:
 ```bash
 $ factorio-server my-server-1 start --port 12345
 ```
-
-## Notes
-
-On the first run, the wrapper script creates `$HOME/.factorio` to store all the
-mutable game data. This is also where the config is stored.
